@@ -3,7 +3,7 @@ import { ConfigPanel } from './components/ConfigPanel';
 import { ResultDashboard } from './components/ResultDashboard';
 import { GeneratorConfig } from './types';
 import { useContractGenerator } from './hooks/useContractGenerator';
-import { ShieldAlert, Zap, Sparkles } from 'lucide-react';
+import { ShieldAlert, Sparkles } from 'lucide-react';
 
 const App: React.FC = () => {
   const [config, setConfig] = useState<GeneratorConfig>({
@@ -69,21 +69,7 @@ const App: React.FC = () => {
             </div>
           )}
 
-          {result ? (
-            <ResultDashboard data={result} />
-          ) : (
-            <div className="h-full flex flex-col items-center justify-center text-[#64748b] space-y-8">
-              <div className="w-32 h-32 rounded-2xl bg-[#1e293b] border-2 border-dashed border-[#334155] flex items-center justify-center">
-                <Zap size={48} className="text-[#4f46e5]" />
-              </div>
-              <div className="text-center max-w-lg">
-                <h3 className="text-2xl font-bold text-[#f1f5f9] mb-3">Ready to Generate</h3>
-                <p className="text-[#94a3b8] leading-relaxed">
-                  Configure mutations in the sidebar and click "Generate Case" to create synthetic contract data for AI training and testing.
-                </p>
-              </div>
-            </div>
-          )}
+          {result && <ResultDashboard data={result} />}
         </div>
       </main>
     </div>

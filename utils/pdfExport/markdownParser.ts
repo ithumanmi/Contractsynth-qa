@@ -24,6 +24,15 @@ export const formatSimpleText = (text: string): string => {
   const lines = text.split('\n');
   const result: string[] = [];
   let inList = false;
+  let currentParagraph: string[] = [];
+  
+  const flushParagraph = () => {
+    if (currentParagraph.length > 0) {
+      const formatted = currentParagraph.map(line => formatMarkdownText(escapeHtml(line))).join('<br>');
+      result.push(`<p>${formatted}</p>`);
+      currentParagraph = [];
+    }
+  };
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -34,16 +43,16 @@ export const formatSimpleText = (text: string): string => {
         result.push('</ul>');
         inList = false;
       }
-      result.push('<br>');
+      flushParagraph();
       continue;
     }
     
-    // Headers
     if (trimmed.startsWith('# ')) {
       if (inList) {
         result.push('</ul>');
         inList = false;
       }
+      flushParagraph();
       result.push(`<h1>${escapeHtml(trimmed.substring(2))}</h1>`);
       continue;
     }
@@ -52,6 +61,7 @@ export const formatSimpleText = (text: string): string => {
         result.push('</ul>');
         inList = false;
       }
+      flushParagraph();
       result.push(`<h2>${escapeHtml(trimmed.substring(3))}</h2>`);
       continue;
     }
@@ -60,12 +70,13 @@ export const formatSimpleText = (text: string): string => {
         result.push('</ul>');
         inList = false;
       }
+      flushParagraph();
       result.push(`<h3>${escapeHtml(trimmed.substring(4))}</h3>`);
       continue;
     }
     
-    // Lists
     if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      flushParagraph();
       if (!inList) {
         result.push('<ul>');
         inList = true;
@@ -76,6 +87,7 @@ export const formatSimpleText = (text: string): string => {
     }
     
     if (/^\d+\.\s/.test(trimmed)) {
+      flushParagraph();
       if (!inList) {
         result.push('<ol>');
         inList = true;
@@ -85,20 +97,18 @@ export const formatSimpleText = (text: string): string => {
       continue;
     }
     
-    // Close list if we hit a paragraph
     if (inList) {
       result.push('</ul>');
       inList = false;
     }
     
-    // Regular paragraph
-    const formatted = formatMarkdownText(escapeHtml(trimmed));
-    result.push(`<p>${formatted}</p>`);
+    currentParagraph.push(trimmed);
   }
   
   if (inList) {
     result.push('</ul>');
   }
+  flushParagraph();
   
   return result.join('');
 };

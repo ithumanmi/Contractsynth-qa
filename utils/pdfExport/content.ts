@@ -1,40 +1,61 @@
 import { ParsedResponse } from '../../types';
-import { escapeHtml, formatSimpleText } from './markdownParser';
+import { formatVietnameseLegalContract } from './contractFormatter';
 
 export const buildPdfContent = (data: ParsedResponse): string => {
-  const parts: string[] = [];
-
-  // Case ID
-  if (data.caseId) {
-    parts.push(`<h2>Case ID: ${escapeHtml(data.caseId)}</h2>`);
-  }
-
-  // Observed Text (main content)
+  console.log('[buildPdfContent] Starting build');
+  console.log('[buildPdfContent] Has observedText:', !!data.observedText);
+  
   if (data.observedText) {
-    parts.push('<h3>Contract Content</h3>');
-    parts.push(`<div class="content">${formatSimpleText(data.observedText)}</div>`);
-  }
-
-  // Anomalies
-  if (data.anomalies && data.anomalies.length > 0) {
-    parts.push('<h3>Anomalies</h3>');
-    parts.push('<ul>');
-    data.anomalies.forEach(anomaly => {
-      parts.push(`<li><strong>${escapeHtml(anomaly.code)}</strong>: ${escapeHtml(anomaly.description)}</li>`);
+    console.log('[buildPdfContent] observedText length:', data.observedText.length);
+    console.log('[buildPdfContent] observedText preview (first 500 chars):', data.observedText.substring(0, 500));
+    console.log('[buildPdfContent] observedText full content:', data.observedText);
+    
+    const formattedText = formatVietnameseLegalContract(data.observedText);
+    console.log('[buildPdfContent] Formatted text length:', formattedText.length);
+    console.log('[buildPdfContent] Formatted text preview (last 500 chars):', formattedText.substring(Math.max(0, formattedText.length - 500)));
+    console.log('[buildPdfContent] Formatted text full content:', formattedText);
+    
+    const result = `<div class="pdf-content">${formattedText}</div>`;
+    console.log('[buildPdfContent] Final result length:', result.length);
+    
+    const tableCount = (formattedText.match(/contract-table/g) || []).length;
+    const articleCount = (formattedText.match(/contract-article-header/g) || []).length;
+    const signatureCount = (formattedText.match(/contract-signature/g) || []).length;
+    const paragraphCount = (formattedText.match(/contract-paragraph/g) || []).length;
+    const clauseCount = (formattedText.match(/contract-clause/g) || []).length;
+    const itemCount = (formattedText.match(/contract-item/g) || []).length;
+    
+    console.log('[buildPdfContent] Content summary:', {
+      tables: tableCount,
+      articles: articleCount,
+      signatures: signatureCount,
+      paragraphs: paragraphCount,
+      clauses: clauseCount,
+      items: itemCount,
+      totalBlocks: tableCount + articleCount + signatureCount + paragraphCount + clauseCount + itemCount
     });
-    parts.push('</ul>');
-  }
-
-  // Pass Criteria
-  if (data.passCriteria && data.passCriteria.length > 0) {
-    parts.push('<h3>Pass Criteria</h3>');
-    parts.push('<ul>');
-    data.passCriteria.forEach(criteria => {
-      parts.push(`<li>${escapeHtml(criteria)}</li>`);
+    
+    const inputText = data.observedText.replace(/[|*#\-\s]+/g, ' ').replace(/\s+/g, ' ').trim();
+    const inputWordCount = inputText.split(/\s+/).filter(w => w.trim() && w.length > 0).length;
+    const outputText = formattedText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    const outputWordCount = outputText.split(/\s+/).filter(w => w.trim() && w.length > 0).length;
+    const wordRatio = inputWordCount > 0 ? (outputWordCount / inputWordCount) : 0;
+    
+    console.log('[buildPdfContent] Word count comparison:', {
+      input: inputWordCount,
+      output: outputWordCount,
+      ratio: wordRatio.toFixed(2),
+      coverage: (wordRatio * 100).toFixed(1) + '%'
     });
-    parts.push('</ul>');
+    
+    if (wordRatio < 0.95) {
+      console.warn('[buildPdfContent] WARNING: Word coverage is less than 95%!');
+    }
+    
+    return result;
   }
-
-  return `<div class="pdf-content">${parts.join('')}</div>`;
+  
+  console.warn('[buildPdfContent] No observedText provided!');
+  return '<div class="pdf-content"></div>';
 };
 

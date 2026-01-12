@@ -1,4 +1,5 @@
 import { SYSTEM_INSTRUCTION, MUTATIONS } from '../constants';
+import { generateCaseId } from '../utils/constants';
 import { FakerData, ParsedResponse, MutationCode } from '../types';
 
 const extractBlock = (text: string, startTag: string, endTag: string): string => {
@@ -22,7 +23,7 @@ export const parseOpenAIResponse = (text: string): ParsedResponse => {
     const anomaliesObj = JSON.parse(anomaliesJsonStr || '{"anomalies": []}');
 
     return {
-      caseId: caseId || "UNKNOWN_ID",
+      caseId: caseId || generateCaseId(),
       varsJson: JSON.parse(varsJsonStr || "{}"),
       truthIntendedJson: JSON.parse(truthJsonStr || "{}"),
       anomalies: anomaliesObj.anomalies || [],
