@@ -1,0 +1,5 @@
+{
+  "name": "ContractSynth QA",
+  "description": "Adversarial synthetic legal contract generator using Gemini 3 Pro for parsing pipeline validation.",
+  "requestFramePermissions": []
+}
