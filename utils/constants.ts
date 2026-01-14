@@ -1,22 +1,22 @@
 export const COLORS = {
-  primary: '#4f46e5',
-  primaryDark: '#312e81',
-  secondary: '#14b8a6',
-  success: '#10b981',
-  warning: '#f59e0b',
-  error: '#ef4444',
-  surface: '#1e293b',
-  surfaceLight: '#334155',
-  surfaceDark: '#0f172a',
-  textPrimary: '#f1f5f9',
-  textSecondary: '#94a3b8',
-  textTertiary: '#64748b',
+  primary: '#7B8FFB',
+  primaryDark: '#6366F1',
+  secondary: '#B896F7',
+  success: '#6BD88A',
+  warning: '#FFD93D',
+  error: '#FF6B9D',
+  surface: '#FFFFFF',
+  surfaceLight: '#F8F9FF',
+  surfaceDark: '#FEFBF3',
+  textPrimary: '#2D3748',
+  textSecondary: '#718096',
+  textTertiary: '#A0AEC0',
 } as const;
 
 export const CATEGORY_COLORS: Record<string, string> = {
-  Formatting: 'bg-[#4f46e5]/10 text-[#818cf8] border-[#4f46e5]/30',
-  Logic: 'bg-[#f59e0b]/10 text-[#fbbf24] border-[#f59e0b]/30',
-  Content: 'bg-[#14b8a6]/10 text-[#5eead4] border-[#14b8a6]/30',
+  Formatting: 'bg-[#7B8FFB]/10 text-[#7B8FFB] border-[#7B8FFB]/30',
+  Logic: 'bg-[#FFD93D]/10 text-[#FFB86C] border-[#FFD93D]/30',
+  Content: 'bg-[#6BD88A]/10 text-[#6BD88A] border-[#6BD88A]/30',
 };
 
 export const CATEGORY_ICONS: Record<string, string> = {
@@ -35,4 +35,3 @@ export const generateCaseId = (): string => {
   const seconds = String(now.getSeconds()).padStart(2, '0');
   return `CASE_${year}${month}${day}_${hours}${minutes}${seconds}`;
 };
-

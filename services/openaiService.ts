@@ -61,6 +61,8 @@ const buildUserPrompt = (
     DỮ LIỆU ĐẦU VÀO (VARS_JSON - Nguồn sự thật):
     ${JSON.stringify(fakerData, null, 2)}
     
+    LƯU Ý QUAN TRỌNG: VAT rate là ${fakerData.vatRate}%. Phải hiển thị rõ "VAT ${fakerData.vatRate}%" hoặc "Thuế GTGT: ${fakerData.vatRate}%" trong bảng giá và phần tổng kết của hợp đồng.
+    
     YÊU CẦU MUTATIONS (Áp dụng các lỗi sau vào văn bản OBSERVED_TEXT):
     ${mutationDetails}
     

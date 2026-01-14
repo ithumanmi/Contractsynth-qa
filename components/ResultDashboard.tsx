@@ -1,14 +1,16 @@
 import React, { useState, useMemo } from 'react';
-import { ParsedResponse } from '../types';
+import { ParsedResponse, FakerData } from '../types';
 import { JsonDisplay } from './JsonDisplay';
-import { AlertTriangle, CheckCircle, FileText, Activity, Download, FileJson, Shield, TrendingUp } from 'lucide-react';
-import { exportPdf, exportJson } from '../utils/export';
+import { AlertTriangle, CheckCircle, FileText, Activity, Download, Shield, TrendingUp } from 'lucide-react';
+import { exportPdf } from '../utils/export';
 
 interface ResultDashboardProps {
   data: ParsedResponse;
+  fakerData: FakerData | null;
 }
 
-export const ResultDashboard: React.FC<ResultDashboardProps> = ({ data }) => {
+
+export const ResultDashboard: React.FC<ResultDashboardProps> = ({ data, fakerData }) => {
   const [activeTab, setActiveTab] = useState<'preview' | 'anomalies'>('preview');
   const [isExporting, setIsExporting] = useState(false);
 
@@ -26,21 +28,18 @@ export const ResultDashboard: React.FC<ResultDashboardProps> = ({ data }) => {
     }
   };
 
-  const handleExportJson = () => {
-    exportJson(data);
-  };
 
   return (
     <div className="h-full flex flex-col">
       <div className="flex-1 min-h-0 flex space-x-6 p-6">
-        <div className="w-2/3 flex flex-col bg-[#1e293b] rounded-2xl border border-[#334155] overflow-hidden shadow-lg">
-          <div className="flex border-b border-[#334155] bg-[#0f172a]">
+        <div className="w-2/3 flex flex-col card-floating overflow-hidden animate-fadeIn">
+          <div className="flex border-b border-[#E8EAED] bg-gradient-to-r from-white to-[#F8F9FF]">
             <button 
               onClick={() => setActiveTab('preview')}
-              className={`flex-1 py-4 px-6 text-sm font-semibold flex items-center justify-center space-x-2 transition-all ${
+              className={`flex-1 py-4 px-6 text-sm font-semibold flex items-center justify-center space-x-2 transition-all rounded-tl-2xl ${
                 activeTab === 'preview' 
-                  ? 'bg-[#1e293b] text-[#f1f5f9] border-b-2 border-[#4f46e5]' 
-                  : 'text-[#94a3b8] hover:text-[#f1f5f9] hover:bg-[#1e293b]/50'
+                  ? 'bg-white text-[#7B8FFB] border-b-2 border-[#7B8FFB] shadow-sm' 
+                  : 'text-[#718096] hover:text-[#2D3748] hover:bg-[#F8F9FF]'
               }`}
             >
               <FileText size={18} /> 
@@ -48,10 +47,10 @@ export const ResultDashboard: React.FC<ResultDashboardProps> = ({ data }) => {
             </button>
             <button 
               onClick={() => setActiveTab('anomalies')}
-              className={`flex-1 py-4 px-6 text-sm font-semibold flex items-center justify-center space-x-2 transition-all ${
+              className={`flex-1 py-4 px-6 text-sm font-semibold flex items-center justify-center space-x-2 transition-all rounded-tr-2xl ${
                 activeTab === 'anomalies' 
-                  ? 'bg-[#1e293b] text-[#f59e0b] border-b-2 border-[#f59e0b]' 
-                  : 'text-[#94a3b8] hover:text-[#f1f5f9] hover:bg-[#1e293b]/50'
+                  ? 'bg-white text-[#FF8CC8] border-b-2 border-[#FF8CC8] shadow-sm' 
+                  : 'text-[#718096] hover:text-[#2D3748] hover:bg-[#F8F9FF]'
               }`}
             >
               <Activity size={18} /> 
@@ -59,53 +58,53 @@ export const ResultDashboard: React.FC<ResultDashboardProps> = ({ data }) => {
             </button>
           </div>
 
-          <div className="flex-1 overflow-auto p-6 custom-scrollbar bg-[#0f172a]">
+          <div className="flex-1 overflow-auto p-6 custom-scrollbar bg-white">
             {activeTab === 'preview' && (
               <div className="space-y-4">
                 {hasWatermark && (
-                  <div className="bg-[#10b981]/10 border border-[#10b981]/30 rounded-xl p-4 flex items-center space-x-3">
-                    <Shield className="text-[#10b981]" size={20} />
+                  <div className="bg-gradient-to-r from-[#6BD88A]/10 to-[#48BB78]/10 border-2 border-[#6BD88A]/30 rounded-2xl p-4 flex items-center space-x-3 animate-fadeIn">
+                    <Shield className="text-[#6BD88A]" size={22} />
                     <div>
-                      <p className="text-sm font-semibold text-[#10b981]">Watermark Valid</p>
-                      <p className="text-xs text-[#64748b]">Synthetic data marker detected</p>
+                      <p className="text-sm font-bold text-[#6BD88A]">Watermark Valid</p>
+                      <p className="text-xs text-[#718096] font-medium">Synthetic data marker detected</p>
                     </div>
                   </div>
                 )}
-                <div className="prose prose-invert prose-sm max-w-none font-mono text-[#f1f5f9] whitespace-pre-wrap leading-relaxed bg-[#1e293b] rounded-xl p-6 border border-[#334155]">
+                <div className="prose prose-invert prose-sm max-w-none font-mono text-[#2D3748] whitespace-pre-wrap leading-relaxed bg-[#F8F9FF] rounded-2xl p-6 border-2 border-[#E8EAED] shadow-sm">
                   {data.observedText}
                 </div>
               </div>
             )}
             {activeTab === 'anomalies' && (
               <div className="space-y-6">
-                <div className="bg-[#f59e0b]/10 border border-[#f59e0b]/30 rounded-xl p-6">
-                  <h4 className="text-[#fbbf24] font-bold mb-4 text-sm uppercase tracking-wider flex items-center">
+                <div className="bg-gradient-to-br from-[#FFD93D]/10 to-[#FFB86C]/10 border-2 border-[#FFD93D]/30 rounded-2xl p-6 animate-fadeIn">
+                  <h4 className="text-[#FFB86C] font-bold mb-4 text-sm uppercase tracking-wider flex items-center">
                     <Activity size={16} className="mr-2" />
                     Active Mutations
                   </h4>
                   {data.anomalies.length === 0 ? (
-                    <p className="text-[#94a3b8] text-sm italic">No mutations applied. Clean case.</p>
+                    <p className="text-[#718096] text-sm italic">No mutations applied. Clean case.</p>
                   ) : (
                     <div className="space-y-3">
                       {data.anomalies.map((anom, idx) => (
-                        <div key={idx} className="flex items-start space-x-3 bg-[#1e293b] rounded-lg p-3 border border-[#334155]">
-                          <span className="font-mono bg-[#f59e0b]/20 text-[#fbbf24] px-2 py-1 rounded text-xs font-bold border border-[#f59e0b]/30">
+                        <div key={idx} className="flex items-start space-x-3 bg-white rounded-xl p-3.5 border-2 border-[#E8EAED] shadow-sm hover:shadow-md transition-all">
+                          <span className="font-mono bg-gradient-to-r from-[#FF8CC8]/10 to-[#ED64A6]/10 text-[#FF8CC8] px-3 py-1 rounded-xl text-xs font-bold border border-[#FF8CC8]/30">
                             {anom.code}
                           </span>
-                          <span className="text-sm text-[#f1f5f9] flex-1">{anom.description}</span>
+                          <span className="text-sm text-[#2D3748] flex-1 font-medium">{anom.description}</span>
                         </div>
                       ))}
                     </div>
                   )}
                 </div>
                 
-                <div className="bg-[#1e293b] rounded-xl p-6 border border-[#334155]">
-                  <h4 className="text-[#94a3b8] font-bold mb-4 text-sm uppercase tracking-wider">Pass Criteria</h4>
+                <div className="card-floating p-6 animate-fadeIn">
+                  <h4 className="text-[#718096] font-bold mb-4 text-sm uppercase tracking-wider">Pass Criteria</h4>
                   <ul className="space-y-2">
                     {data.passCriteria.map((crit, idx) => (
-                      <li key={idx} className="flex items-start space-x-2 text-sm text-[#f1f5f9]">
-                        <CheckCircle size={16} className="text-[#10b981] mt-0.5 flex-shrink-0" />
-                        <span>{crit}</span>
+                      <li key={idx} className="flex items-start space-x-2 text-sm text-[#2D3748]">
+                        <CheckCircle size={16} className="text-[#6BD88A] mt-0.5 flex-shrink-0" />
+                        <span className="font-medium">{crit}</span>
                       </li>
                     ))}
                   </ul>
@@ -117,62 +116,53 @@ export const ResultDashboard: React.FC<ResultDashboardProps> = ({ data }) => {
 
         <div className="w-1/3 flex flex-col space-y-6">
           <div className="flex-1">
-            <JsonDisplay data={data.truthIntendedJson} title="TRUTH_INTENDED (GOLD STANDARD)" colorClass="text-[#14b8a6]" />
+            <JsonDisplay data={data.truthIntendedJson} title="TRUTH_INTENDED (GOLD STANDARD)" colorClass="text-[#6BD88A]" />
           </div>
           <div className="h-80">
-            <JsonDisplay data={data.varsJson} title="VARS_JSON (INPUT DATA)" colorClass="text-[#818cf8]" />
+            <JsonDisplay data={data.varsJson} title="VARS_JSON (INPUT DATA)" colorClass="text-[#7B8FFB]" />
           </div>
         </div>
       </div>
 
-      <div className="sticky bottom-0 bg-[#1e293b] border-t border-[#334155] px-6 py-4 flex items-center justify-between shadow-lg">
-        <div className="flex items-center space-x-6">
-          <div className="flex items-center space-x-3">
-            <div className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg border ${
-              hasWatermark 
-                ? 'bg-[#10b981]/10 border-[#10b981]/30 text-[#10b981]' 
-                : 'bg-[#ef4444]/10 border-[#ef4444]/30 text-[#ef4444]'
-            }`}>
-              {hasWatermark ? <CheckCircle size={16} /> : <AlertTriangle size={16} />}
-              <span className="text-xs font-semibold">Watermark</span>
-            </div>
-            
-            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-[#1e293b] border border-[#334155]">
-              <TrendingUp size={16} className="text-[#14b8a6]" />
-              <span className="text-xs text-[#94a3b8]">Integrity:</span>
-              <span className={`text-xs font-bold ${
-                integrityScore >= 80 ? 'text-[#10b981]' : 
-                integrityScore >= 50 ? 'text-[#f59e0b]' : 'text-[#ef4444]'
-              }`}>
-                {integrityScore}%
-              </span>
-            </div>
-
-            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-[#1e293b] border border-[#334155]">
-              <Activity size={16} className="text-[#f59e0b]" />
-              <span className="text-xs text-[#94a3b8]">Anomalies:</span>
-              <span className={`text-xs font-bold ${
-                data.anomalies.length === 0 ? 'text-[#10b981]' : 'text-[#f59e0b]'
-              }`}>
-                {data.anomalies.length}
-              </span>
-            </div>
+      <div className="sticky bottom-0 bg-white/90 backdrop-blur-xl border-t border-[#E8EAED] px-6 py-4 flex items-center justify-between shadow-lg">
+        <div className="flex items-center space-x-4">
+          <div className={`flex items-center space-x-2 px-4 py-2 rounded-xl border-2 ${
+            hasWatermark 
+              ? 'bg-gradient-to-r from-[#6BD88A]/10 to-[#48BB78]/10 border-[#6BD88A]/30 text-[#6BD88A]' 
+              : 'bg-gradient-to-r from-[#FF6B9D]/10 to-[#ED64A6]/10 border-[#FF6B9D]/30 text-[#FF6B9D]'
+          }`}>
+            {hasWatermark ? <CheckCircle size={16} /> : <AlertTriangle size={16} />}
+            <span className="text-xs font-bold">Watermark</span>
           </div>
+          
+          <div className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white border-2 border-[#E8EAED] shadow-sm">
+            <TrendingUp size={16} className="text-[#6BD88A]" />
+            <span className="text-xs text-[#718096] font-medium">Integrity:</span>
+            <span className={`text-xs font-bold ${
+              integrityScore >= 80 ? 'text-[#6BD88A]' : 
+              integrityScore >= 50 ? 'text-[#FFD93D]' : 'text-[#FF6B9D]'
+            }`}>
+              {integrityScore}%
+            </span>
+          </div>
+
+          <div className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white border-2 border-[#E8EAED] shadow-sm">
+            <Activity size={16} className="text-[#FF8CC8]" />
+            <span className="text-xs text-[#718096] font-medium">Anomalies:</span>
+            <span className={`text-xs font-bold ${
+              data.anomalies.length === 0 ? 'text-[#6BD88A]' : 'text-[#FF8CC8]'
+            }`}>
+              {data.anomalies.length}
+            </span>
+          </div>
+
         </div>
 
         <div className="flex items-center space-x-3">
-          <button
-            onClick={handleExportJson}
-            className="flex items-center space-x-2 px-4 py-2 bg-[#334155] hover:bg-[#475569] text-[#f1f5f9] rounded-xl text-sm font-semibold transition-colors border border-[#475569]"
-          >
-            <FileJson size={16} />
-            <span>Export JSON</span>
-          </button>
-          
           <button 
             onClick={handleExportPdf}
             disabled={isExporting}
-            className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-[#4f46e5] to-[#312e81] hover:from-[#6366f1] hover:to-[#4338ca] text-white rounded-xl text-sm font-semibold transition-all shadow-lg shadow-[#4f46e5]/30 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="button-primary flex items-center space-x-2 px-5 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isExporting ? (
               <>
@@ -186,6 +176,7 @@ export const ResultDashboard: React.FC<ResultDashboardProps> = ({ data }) => {
               </>
             )}
           </button>
+
         </div>
       </div>
     </div>

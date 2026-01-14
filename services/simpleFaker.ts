@@ -112,6 +112,7 @@ export const generateFakerData = (seed: number): FakerData => {
   const month = rng.range(1, 12);
   const day = rng.range(1, 28);
   const dateStr = `ngày ${day} tháng ${month} năm ${year}`;
+  const vatRate = rng.pick([8, 10]);
   const paymentPhases = generatePaymentPhases(rng, totalAmount, year);
 
   return {
@@ -121,6 +122,7 @@ export const generateFakerData = (seed: number): FakerData => {
     partyB: generateCompany(rng, false),
     items,
     totalAmount,
+    vatRate,
     paymentPhases
   };
 };

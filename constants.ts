@@ -89,7 +89,7 @@ Hãy tạo văn bản Markdown mô phỏng cấu trúc sau:
 4.  **Điều 1: Phạm vi và thực hiện dịch vụ:** Mô tả chi tiết dịch vụ (lấy từ Items).
 5.  **Điều 2: Phí dịch vụ, Đặt cọc, Thanh toán:**
     *   **Bảng giá:** STT | Nội dung | Đơn giá | Thành tiền.
-    *   Tính tổng cộng và VAT (thường là 8% hoặc 10%).
+    *   **BẮT BUỘC VAT:** Phải hiển thị rõ VAT trong bảng giá và phần tổng kết. Sử dụng VAT rate từ VARS_JSON (vatRate). Ví dụ: "VAT 10%", "Thuế GTGT: 8%", hoặc "VAT: 10%". Tính và hiển thị: Tổng cộng trước VAT, VAT (theo vatRate), và Tổng sau VAT.
     *   **LƯU Ý E21:** Nếu có mutation E21, phải tạo mục "Tiến độ thanh toán" chia thành nhiều đợt (P1, P2...) dựa trên paymentPhases trong VARS_JSON.
 6.  **Điều 3:** Phạt vi phạm, bồi thường thiệt hại.
 7.  **Điều 4:** Thời hạn và chấm dứt.

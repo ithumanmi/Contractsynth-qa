@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { GeneratorConfig, ParsedResponse } from '../types';
+import { GeneratorConfig, ParsedResponse, FakerData } from '../types';
 import { generateFakerData } from '../services/simpleFaker';
 import { generateContractWithOpenAI } from '../services/openaiService';
 
 export const useContractGenerator = () => {
   const [result, setResult] = useState<ParsedResponse | null>(null);
+  const [fakerData, setFakerData] = useState<FakerData | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -12,7 +13,8 @@ export const useContractGenerator = () => {
     setError(null);
     setIsGenerating(true);
     try {
-      const fakerData = generateFakerData(config.seed);
+      const data = generateFakerData(config.seed);
+      setFakerData(data);
       const apiKey = process.env.OPENAI_API_KEY;
       const baseUrl = process.env.OPENAI_BASE_URL;
       const model = process.env.OPENAI_MODEL || config.model;
@@ -28,7 +30,7 @@ export const useContractGenerator = () => {
         apiKey,
         baseUrl,
         model,
-        fakerData,
+        data,
         config.activeMutations,
         config.contractType,
         config.locale
@@ -43,6 +45,6 @@ export const useContractGenerator = () => {
     }
   };
 
-  return { result, isGenerating, error, generate, setError };
+  return { result, fakerData, isGenerating, error, generate, setError };
 };
 

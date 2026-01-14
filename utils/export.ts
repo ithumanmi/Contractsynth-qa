@@ -9,6 +9,7 @@ import {
   getHtml2Pdf
 } from './pdfExport/index';
 import type { PdfMetadata } from './pdfExport/index';
+import { logger } from './logger';
 
 const RENDER_DELAY_MS = 2000;
 const DOWNLOAD_DELAY_MS = 100;
