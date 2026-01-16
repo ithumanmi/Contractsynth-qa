@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { GeneratorConfig, ParsedResponse, FakerData } from '../types';
 import { generateFakerData } from '../services/simpleFaker';
+import { generateFakerDataWithAI } from '../services/aiDataGenerator';
 import { generateContractWithOpenAI } from '../services/openaiService';
 
 export const useContractGenerator = () => {
@@ -13,8 +14,6 @@ export const useContractGenerator = () => {
     setError(null);
     setIsGenerating(true);
     try {
-      const data = generateFakerData(config.seed);
-      setFakerData(data);
       const apiKey = process.env.OPENAI_API_KEY;
       const baseUrl = process.env.OPENAI_BASE_URL;
       const model = process.env.OPENAI_MODEL || config.model;
@@ -25,6 +24,16 @@ export const useContractGenerator = () => {
       if (!baseUrl) {
         throw new Error("Không tìm thấy Base URL. Vui lòng thiết lập biến môi trường OPENAI_BASE_URL.");
       }
+
+      let data: FakerData;
+      try {
+        data = await generateFakerDataWithAI(apiKey, baseUrl, model, config.seed);
+      } catch (aiError: any) {
+        console.warn("AI data generation failed, using fallback:", aiError);
+        data = generateFakerData(Date.now());
+      }
+      
+      setFakerData(data);
 
       const response = await generateContractWithOpenAI(
         apiKey,
