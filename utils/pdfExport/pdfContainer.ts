@@ -4,7 +4,7 @@ export const CONTAINER_STYLES = `
   position: fixed;
   top: -9999px;
   left: -9999px;
-  width: ${A4_WIDTH};
+  width: 794px;
   min-height: 100vh;
   padding: ${PAGE_PADDING};
   background: #ffffff;
@@ -14,5 +14,6 @@ export const CONTAINER_STYLES = `
   pointer-events: none;
   overflow: visible;
   z-index: -1;
+  height: auto;
 `;
 

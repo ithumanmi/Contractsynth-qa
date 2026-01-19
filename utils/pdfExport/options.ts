@@ -1,7 +1,7 @@
 import { PdfMetadata, PdfExportOptions, Html2PdfWindow } from './types';
 import { applyCloneStyles } from './applyCloneStyles';
 
-const DEFAULT_MARGIN: [number, number, number, number] = [0, 20, 20, 20];
+const DEFAULT_MARGIN: [number, number, number, number] = [20, 20, 20, 20];
 const DEFAULT_SCALE = 2;
 const DEFAULT_QUALITY = 0.98;
 const A4_WIDTH_MM = 210;
@@ -29,7 +29,7 @@ export const createPdfOptions = (
     computedVisibility: window.getComputedStyle(element).visibility
   });
 
-  const captureHeight = Math.max(scrollHeight, 2000);
+  const captureHeight = Math.max(scrollHeight * 1.5, 3000);
   
   return {
     margin,
@@ -45,8 +45,8 @@ export const createPdfOptions = (
       backgroundColor: '#ffffff',
       width: A4_WIDTH_PX,
       windowWidth: A4_WIDTH_PX,
-      windowHeight: captureHeight,
-      height: captureHeight,
+      windowHeight: captureHeight * 2,
+      height: captureHeight * 2,
       letterRendering: true,
       allowTaint: true,
       removeContainer: false,
@@ -56,6 +56,7 @@ export const createPdfOptions = (
       scrollY: 0,
       imageTimeout: 15000,
       foreignObjectRendering: false,
+      async: true,
       onclone: (clonedDoc: Document) => {
         console.log('[html2canvas onclone] Applying clone styles');
         applyCloneStyles(clonedDoc);

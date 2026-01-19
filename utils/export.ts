@@ -140,6 +140,10 @@ export const exportPdf = async (
   element.style.opacity = '0';
   element.style.pointerEvents = 'none';
   element.style.zIndex = '-1';
+  element.style.width = '794px';
+  element.style.height = 'auto';
+  element.style.minHeight = 'auto';
+  element.style.maxHeight = 'none';
   document.body.appendChild(element);
 
   try {
@@ -172,12 +176,19 @@ export const exportPdf = async (
      container.style.setProperty('z-index', '9999', 'important');
      container.style.setProperty('width', '794px', 'important');
      container.style.setProperty('background-color', '#ffffff', 'important');
+     container.style.setProperty('height', 'auto', 'important');
+     container.style.setProperty('min-height', 'auto', 'important');
+     container.style.setProperty('max-height', 'none', 'important');
+     container.style.setProperty('overflow', 'visible', 'important');
      
      const pdfContentEl = container.querySelector('.pdf-content') as HTMLElement | null;
      if (pdfContentEl) {
        pdfContentEl.style.setProperty('color', '#000000', 'important');
        pdfContentEl.style.setProperty('visibility', 'visible', 'important');
        pdfContentEl.style.setProperty('opacity', '1', 'important');
+       pdfContentEl.style.setProperty('height', 'auto', 'important');
+       pdfContentEl.style.setProperty('max-height', 'none', 'important');
+       pdfContentEl.style.setProperty('overflow', 'visible', 'important');
      }
      
      container.querySelectorAll('*').forEach(el => {
@@ -185,6 +196,8 @@ export const exportPdf = async (
        htmlEl.style.setProperty('color', '#000000', 'important');
        htmlEl.style.setProperty('visibility', 'visible', 'important');
        htmlEl.style.setProperty('opacity', '1', 'important');
+       htmlEl.style.setProperty('max-height', 'none', 'important');
+       htmlEl.style.setProperty('overflow', 'visible', 'important');
      });
      
      await new Promise(resolve => {

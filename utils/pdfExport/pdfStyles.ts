@@ -12,29 +12,42 @@ export const BASE_FONT = `
 export const PDF_STYLES = `
 @page {
   size: A4 portrait;
-  margin: 0;
-  orphans: 0;
-  widows: 0;
+  margin: 20mm;
+  orphans: 2;
+  widows: 2;
 }
 
 * {
   -webkit-print-color-adjust: exact !important;
   print-color-adjust: exact !important;
   box-sizing: border-box !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+div {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 html, body {
-  width: ${A4_WIDTH} !important;
+  width: 794px !important;
   margin: 0 !important;
   padding: 0 !important;
   background: #ffffff !important;
   overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
 }
 
 #pdf-export-container {
   position: relative !important;
-  width: ${A4_WIDTH} !important;
-  max-width: ${A4_WIDTH} !important;
+  width: 794px !important;
+  max-width: 794px !important;
   margin: 0 !important;
   padding: 0 !important;
   background: #ffffff !important;
@@ -43,6 +56,10 @@ html, body {
   line-height: 1.6 !important;
   color: #000000 !important;
   text-align: justify !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .pdf-content {
@@ -58,8 +75,10 @@ html, body {
   max-width: 100% !important;
   word-wrap: break-word !important;
   margin: 0 !important;
-  padding: 0 !important;
-  padding-top: 0 !important;
+  padding: 20mm !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .pdf-content h1 {
@@ -67,6 +86,12 @@ html, body {
   font-weight: bold !important;
   margin: 8px 0 6px !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .pdf-content h2 {
@@ -74,6 +99,12 @@ html, body {
   font-weight: bold !important;
   margin: 6px 0 4px !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .pdf-content h3 {
@@ -81,6 +112,12 @@ html, body {
   font-weight: bold !important;
   margin: 6px 0 3px !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .pdf-content p {
@@ -88,6 +125,12 @@ html, body {
   line-height: 1.4 !important;
   word-break: break-word !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .pdf-content ul,
@@ -95,11 +138,23 @@ html, body {
   margin: 4px 0 4px 20px !important;
   padding-left: 20px !important;
   line-height: 1.4 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .pdf-content li {
   margin: 2px 0 !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: list-item !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .pdf-content strong {
@@ -133,6 +188,12 @@ html, body {
   margin: 0 0 12px !important;
   font-size: 10pt !important;
   line-height: 1.5 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-national-header {
@@ -143,6 +204,12 @@ html, body {
   line-height: 1.8 !important;
   letter-spacing: 0.3px !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-title-main {
@@ -154,6 +221,12 @@ html, body {
   letter-spacing: 1px !important;
   line-height: 1.5 !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-number-line {
@@ -163,6 +236,12 @@ html, body {
   margin: 12px 0 18px !important;
   line-height: 1.6 !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-can-cu {
@@ -172,6 +251,12 @@ html, body {
   margin: 8px 0 12px !important;
   line-height: 1.6 !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-party-a,
@@ -181,6 +266,12 @@ html, body {
   font-size: 11pt !important;
   text-align: left !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-party-a {
@@ -195,6 +286,12 @@ html, body {
   font-style: italic !important;
   text-indent: 0 !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-article-header {
@@ -215,6 +312,8 @@ html, body {
   position: relative !important;
   z-index: 2 !important;
   overflow: visible !important;
+  max-height: none !important;
+  height: auto !important;
 }
 
 .contract-clause {
@@ -224,6 +323,12 @@ html, body {
   font-size: 11pt !important;
   text-indent: 0 !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-subclause {
@@ -234,6 +339,12 @@ html, body {
   text-indent: 0 !important;
   font-weight: bold !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-item {
@@ -263,10 +374,21 @@ html, body {
   widows: 2 !important;
   color: #000000 !important;
   word-spacing: 0.1em !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-spacing {
   height: 1px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-table {
@@ -276,12 +398,23 @@ html, body {
   border: 1px solid #333333 !important;
   page-break-inside: avoid !important;
   page-break-after: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-table-row {
   display: flex !important;
   border-bottom: 1px solid #333333 !important;
   min-height: 32px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-table-row:last-child {
@@ -301,6 +434,12 @@ html, body {
   color: #000000 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.3px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-table-header:last-child {
@@ -318,6 +457,12 @@ html, body {
   color: #000000 !important;
   word-wrap: break-word !important;
   overflow-wrap: break-word !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-table-cell:last-child {
@@ -338,6 +483,11 @@ html, body {
   position: relative !important;
   z-index: 1 !important;
   min-height: 80px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-signature-a,
@@ -346,6 +496,12 @@ html, body {
   font-size: 11pt !important;
   flex: 0 0 48% !important;
   color: #000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 .contract-signature-a {

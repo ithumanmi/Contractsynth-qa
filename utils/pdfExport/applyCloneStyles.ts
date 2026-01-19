@@ -39,12 +39,15 @@ export function applyCloneStyles(doc: Document): void {
 }
 
 function forceBaseLayout(doc: Document, container: HTMLElement) {
+  const pdfContent = container.querySelector('.pdf-content') as HTMLElement;
+  const contentHeight = pdfContent ? Math.max(pdfContent.scrollHeight, pdfContent.offsetHeight, 3000) : 3000;
+  
   container.style.setProperty('position', 'absolute', 'important');
   container.style.setProperty('top', '0', 'important');
   container.style.setProperty('left', '0', 'important');
-  container.style.setProperty('width', A4_WIDTH, 'important');
+  container.style.setProperty('width', '794px', 'important');
   container.style.setProperty('height', 'auto', 'important');
-  container.style.setProperty('min-height', 'auto', 'important');
+  container.style.setProperty('min-height', `${contentHeight + 200}px`, 'important');
   container.style.setProperty('max-height', 'none', 'important');
   container.style.setProperty('background-color', '#ffffff', 'important');
   container.style.setProperty('color', '#000000', 'important');
@@ -63,26 +66,28 @@ function forceBaseLayout(doc: Document, container: HTMLElement) {
   doc.body.style.setProperty('margin', '0', 'important');
   doc.body.style.setProperty('padding', '0', 'important');
   doc.body.style.setProperty('background-color', '#ffffff', 'important');
-  doc.body.style.setProperty('width', A4_WIDTH, 'important');
+  doc.body.style.setProperty('width', '794px', 'important');
   doc.body.style.setProperty('overflow', 'visible', 'important');
   doc.body.style.setProperty('position', 'relative', 'important');
   doc.body.style.setProperty('height', 'auto', 'important');
-  doc.body.style.setProperty('min-height', `${container.scrollHeight + 100}px`, 'important');
+  doc.body.style.setProperty('min-height', `${contentHeight + 300}px`, 'important');
+  doc.body.style.setProperty('max-height', 'none', 'important');
   
   if (doc.documentElement) {
-    doc.documentElement.style.setProperty('width', A4_WIDTH, 'important');
+    doc.documentElement.style.setProperty('width', '794px', 'important');
     doc.documentElement.style.setProperty('margin', '0', 'important');
     doc.documentElement.style.setProperty('padding', '0', 'important');
     doc.documentElement.style.setProperty('background-color', '#ffffff', 'important');
     doc.documentElement.style.setProperty('height', 'auto', 'important');
-    doc.documentElement.style.setProperty('min-height', `${container.scrollHeight + 100}px`, 'important');
+    doc.documentElement.style.setProperty('min-height', `${contentHeight + 300}px`, 'important');
+    doc.documentElement.style.setProperty('max-height', 'none', 'important');
+    doc.documentElement.style.setProperty('overflow', 'visible', 'important');
   }
 
   container.querySelectorAll('*').forEach(el => {
     (el as HTMLElement).style.setProperty('color', '#000000', 'important');
   });
   
-  const pdfContent = container.querySelector('.pdf-content') as HTMLElement;
   if (pdfContent) {
     console.log('[forceBaseLayout] PDF content element found, innerHTML length:', pdfContent.innerHTML.length);
     pdfContent.style.setProperty('color', '#000000', 'important');
@@ -92,6 +97,9 @@ function forceBaseLayout(doc: Document, container: HTMLElement) {
     pdfContent.style.setProperty('visibility', 'visible', 'important');
     pdfContent.style.setProperty('opacity', '1', 'important');
     pdfContent.style.setProperty('position', 'relative', 'important');
+    pdfContent.style.setProperty('height', 'auto', 'important');
+    pdfContent.style.setProperty('max-height', 'none', 'important');
+    pdfContent.style.setProperty('overflow', 'visible', 'important');
     console.log('[forceBaseLayout] PDF content styles applied');
   } else {
     console.warn('[forceBaseLayout] PDF content element (.pdf-content) not found');
@@ -101,6 +109,8 @@ function forceBaseLayout(doc: Document, container: HTMLElement) {
     const htmlEl = el as HTMLElement;
     htmlEl.style.setProperty('visibility', 'visible', 'important');
     htmlEl.style.setProperty('opacity', '1', 'important');
+    htmlEl.style.setProperty('max-height', 'none', 'important');
+    htmlEl.style.setProperty('overflow', 'visible', 'important');
     if (htmlEl.tagName === 'DIV' || htmlEl.tagName === 'P' || htmlEl.tagName === 'SPAN') {
       htmlEl.style.setProperty('display', 'block', 'important');
     }

@@ -22,6 +22,11 @@ export const createPdfElement = (content: string): HTMLElement => {
   element.style.opacity = '0';
   element.style.pointerEvents = 'none';
   element.style.zIndex = '-1';
+  element.style.width = '794px';
+  element.style.height = 'auto';
+  element.style.minHeight = 'auto';
+  element.style.maxHeight = 'none';
+  element.style.overflow = 'visible';
   console.log('[createPdfElement] Element created, innerHTML length:', element.innerHTML.length);
   console.log('[createPdfElement] Element dimensions:', {
     offsetWidth: element.offsetWidth,
